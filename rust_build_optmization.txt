@@ -1,0 +1,60 @@
+40.00s 6,3M Default
+42.75s 4.9M codegen-units = 1
+1m 02s 4.2M lto = "fat"
+
+Linking
+
+0.15s Mold
+0.10s lld
+
+
+Post linking
+
+firs time: ~42.0s
+normal    → 19.17s final size: 4.2M
+
+
+firs time: ~42.0s
+optmized  → 0.05s  final size: 4.2M
+
+
+
+Panic abort
+
+firs time: 37.0s
+optmized  → 0.05s  final size: 3.8m
+
+Opt level Z
+
+firs time: 28.58s
+optmized  → 0.05s  final size: 2.9M
+
+
+UPX
+
+upx --best --lzma target/release/min-sized-rust
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+   2976464 ->    921092   30.95%   linux/amd64   witch_craft
+
+Orginal size        6.3M
+Final size:         2.9M without UPX
+Final size:         900K with UPX
+
+
+Compiling Start:    40.50s
+Compiling Start:    28.58s
+
+
+Final settings:
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+panic = "abort"
+strip = true
+opt-level = "z"
+
+[build]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
